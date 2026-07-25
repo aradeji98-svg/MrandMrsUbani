@@ -9,6 +9,13 @@
   box-sizing: border-box;
 }
 
+/* The [hidden] attribute must always win over author display rules,
+   otherwise hidden overlays (e.g. .lightbox) stay in the layout and
+   intercept clicks across the whole page. */
+[hidden] {
+  display: none !important;
+}
+
 html,
 body {
   width: 100%;
