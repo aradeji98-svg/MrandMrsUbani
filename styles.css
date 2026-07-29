@@ -5432,8 +5432,14 @@ body.gallery-lock {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, .16), transparent 46%),
-    linear-gradient(180deg, rgba(245, 241, 230, .3) 0%, rgba(240, 233, 212, .34) 40%, rgba(232, 222, 194, .72) 74%, rgba(224, 212, 178, .92) 100%);
+    radial-gradient(circle at 50% 16%, rgba(255, 255, 255, .14), transparent 46%),
+    linear-gradient(180deg,
+      rgba(245, 241, 230, .1) 0%,
+      rgba(243, 238, 222, .14) 25%,
+      rgba(240, 233, 212, .2) 50%,
+      rgba(235, 226, 200, .55) 65%,
+      rgba(228, 217, 187, .82) 82%,
+      rgba(220, 207, 172, .94) 100%);
 }
 
 .couple-photo__frame img {
@@ -5510,12 +5516,19 @@ body.gallery-lock {
   }
 }
 
-/* --- Gallery album pages: Back (top-left) + Home (top-right) --- */
+/* --- Gallery album pages: Back + Home now sit in-flow, directly under
+   the header and above the photo grid, so they never sit over photos --- */
+.gallery-page__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: min(92vw, 640px);
+  margin: 6px 0 30px;
+}
+
 .gallery-page__back,
 .gallery-page__home {
-  position: absolute;
-  top: 32px;
-  z-index: 5;
+  position: static;
   margin: 0;
   padding: 0;
   border: none;
@@ -5531,31 +5544,13 @@ body.gallery-lock {
   transition: opacity .25s ease;
 }
 
-.gallery-page__back {
-  left: 32px;
-}
-
-.gallery-page__home {
-  right: 32px;
-}
-
 .gallery-page__back:hover,
 .gallery-page__home:hover {
   opacity: 1;
 }
 
 @media (max-width: 620px) {
-
-  .gallery-page__back,
-  .gallery-page__home {
-    top: 20px;
-  }
-
-  .gallery-page__back {
-    left: 20px;
-  }
-
-  .gallery-page__home {
-    right: 20px;
+  .gallery-page__nav {
+    margin: 4px 0 22px;
   }
 }
