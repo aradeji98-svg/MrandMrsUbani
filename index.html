@@ -21,6 +21,9 @@
   </button>
   <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo preview" hidden>
     <button type="button" class="lightbox__close" id="lightbox-close" aria-label="Close preview">&times;</button>
+    <button type="button" class="lightbox__nav lightbox__nav--prev" id="lightbox-prev" aria-label="Previous photo">&#8249;</button>
+    <button type="button" class="lightbox__nav lightbox__nav--next" id="lightbox-next" aria-label="Next photo">&#8250;</button>
+    <span class="lightbox__counter" id="lightbox-counter"></span>
     <img class="lightbox__image" id="lightbox-image" src="" alt="">
     <a class="lightbox__download" id="lightbox-download" href="" download>
       <i aria-hidden="true"></i>
@@ -205,6 +208,7 @@
       </section>
       <section class="gallery-page" id="gallery-love-journey" hidden aria-labelledby="gallery-love-journey-title">
         <button type="button" class="gallery-page__back" data-gallery-close>&larr; Back to gallery</button>
+        <button type="button" class="gallery-page__home" data-gallery-home>Home &#8962;</button>
         <span class="gallery-page__eyebrow">Our Gallery</span>
         <h2 id="gallery-love-journey-title">Love Journey</h2>
         <p class="gallery-page__intro">A few favorite moments from our journey together.</p>
@@ -245,46 +249,40 @@
       </section>
       <section class="gallery-page" id="gallery-pre-wedding" hidden aria-labelledby="gallery-pre-wedding-title">
         <button type="button" class="gallery-page__back" data-gallery-close>&larr; Back to gallery</button>
+        <button type="button" class="gallery-page__home" data-gallery-home>Home &#8962;</button>
         <span class="gallery-page__eyebrow">Our Gallery</span>
         <h2 id="gallery-pre-wedding-title">Pre-Wedding</h2>
         <p class="gallery-page__intro">A few favorite moments from our pre-wedding shoot.</p>
         <div class="gallery-page__grid">
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-02-traditional-elegance.jpg" alt="Olayemi and Emmanuel in traditional Ankara attire, gazing at each other">
-            <figcaption>Traditional Elegance</figcaption>
           </figure>
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-08-sweet-nothings.jpg" alt="Emmanuel kissing Olayemi's cheek in traditional attire, seated on a stool">
-            <figcaption>Sweet Nothings</figcaption>
           </figure>
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-01-candid-laughter.jpg" alt="Olayemi laughing as Emmanuel embraces her from behind">
-            <figcaption>Laughter Together</figcaption>
           </figure>
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-03-dressed-up.jpg" alt="Olayemi and Emmanuel standing close together in black outfits">
-            <figcaption>Standing Together</figcaption>
           </figure>
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-04-golden-hour.jpg" alt="Olayemi embracing Emmanuel from behind while he sits">
-            <figcaption>Close Embrace</figcaption>
           </figure>
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-07-just-the-two-of-us.jpg" alt="Close-up of Olayemi and Emmanuel in elegant wedding-style attire">
-            <figcaption>Elegant Details</figcaption>
           </figure>
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-05-cultural-pride.jpg" alt="Close-up portrait of Olayemi and Emmanuel in traditional Ankara attire">
-            <figcaption>Rooted in Culture</figcaption>
           </figure>
           <figure class="gallery-photo">
             <img src="assets/pre-wedding/pw-06-forever-begins.jpg" alt="Olayemi in a white dress and Emmanuel in a black suit, seated together">
-            <figcaption>Modern Romance</figcaption>
           </figure>
         </div>
       </section>
       <section class="gallery-page" id="gallery-proposal" hidden aria-labelledby="gallery-proposal-title">
         <button type="button" class="gallery-page__back" data-gallery-close>&larr; Back to gallery</button>
+        <button type="button" class="gallery-page__home" data-gallery-home>Home &#8962;</button>
         <span class="gallery-page__eyebrow">Our Gallery</span>
         <h2 id="gallery-proposal-title">Proposal</h2>
         <p class="gallery-page__intro">A few favorite moments from the proposal.</p>

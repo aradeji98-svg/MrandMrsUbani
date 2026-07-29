@@ -284,16 +284,52 @@ document.querySelectorAll('[data-gallery-close]').forEach((button) => {
   button.addEventListener('click', closeGalleryPage);
 });
 
+document.querySelectorAll('[data-gallery-home]').forEach((button) => {
+  button.addEventListener('click', () => {
+    closeGalleryPage();
+    revealPage.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+});
+
 const lightbox = document.getElementById('lightbox');
 const lightboxImage = document.getElementById('lightbox-image');
 const lightboxDownload = document.getElementById('lightbox-download');
 const lightboxClose = document.getElementById('lightbox-close');
+const lightboxPrev = document.getElementById('lightbox-prev');
+const lightboxNext = document.getElementById('lightbox-next');
+const lightboxCounter = document.getElementById('lightbox-counter');
+
+// Photos of the currently open album, kept in order so prev/next and
+// swipe gestures can move through the same set the person is browsing.
+let lightboxImages = [];
+let lightboxIndex = 0;
+
+const updateLightboxNav = () => {
+  const hasMultiple = lightboxImages.length > 1;
+  lightboxPrev.hidden = !hasMultiple;
+  lightboxNext.hidden = !hasMultiple;
+  lightboxCounter.textContent = lightboxImages.length
+    ? `${lightboxIndex + 1} / ${lightboxImages.length}`
+    : '';
+};
+
+const showLightboxImage = (index) => {
+  if (!lightboxImages.length) return;
+  lightboxIndex = (index + lightboxImages.length) % lightboxImages.length;
+  const img = lightboxImages[lightboxIndex];
+  const src = img.currentSrc || img.src;
+  lightboxImage.src = src;
+  lightboxImage.alt = img.alt || '';
+  lightboxDownload.href = src;
+  lightboxDownload.setAttribute('download', src.split('/').pop() || 'photo.jpg');
+  updateLightboxNav();
+};
 
 const openLightbox = (img) => {
-  lightboxImage.src = img.currentSrc || img.src;
-  lightboxImage.alt = img.alt || '';
-  lightboxDownload.href = img.src;
-  lightboxDownload.setAttribute('download', img.src.split('/').pop() || 'photo.jpg');
+  const album = img.closest('.gallery-page') || document;
+  lightboxImages = [...album.querySelectorAll('.gallery-photo img')];
+  const startIndex = lightboxImages.indexOf(img);
+  showLightboxImage(startIndex === -1 ? 0 : startIndex);
   lightbox.hidden = false;
   requestAnimationFrame(() => lightbox.classList.add('is-open'));
   document.body.classList.add('gallery-lock');
@@ -310,11 +346,40 @@ document.querySelectorAll('.gallery-photo img').forEach((img) => {
 });
 
 lightboxClose.addEventListener('click', closeLightbox);
+lightboxPrev.addEventListener('click', () => showLightboxImage(lightboxIndex - 1));
+lightboxNext.addEventListener('click', () => showLightboxImage(lightboxIndex + 1));
+
 lightbox.addEventListener('click', (event) => {
   if (event.target === lightbox) closeLightbox();
 });
 
+// Swipe support: swipe left for next, right for previous.
+let lightboxTouchStartX = null;
+let lightboxTouchStartY = null;
+
+lightbox.addEventListener('touchstart', (event) => {
+  if (event.touches.length !== 1) return;
+  lightboxTouchStartX = event.touches[0].clientX;
+  lightboxTouchStartY = event.touches[0].clientY;
+}, { passive: true });
+
+lightbox.addEventListener('touchend', (event) => {
+  if (lightboxTouchStartX === null) return;
+  const touch = event.changedTouches[0];
+  const deltaX = touch.clientX - lightboxTouchStartX;
+  const deltaY = touch.clientY - lightboxTouchStartY;
+  lightboxTouchStartX = null;
+  lightboxTouchStartY = null;
+  const isHorizontalSwipe = Math.abs(deltaX) >= 40 && Math.abs(deltaX) > Math.abs(deltaY);
+  if (!isHorizontalSwipe) return;
+  showLightboxImage(deltaX < 0 ? lightboxIndex + 1 : lightboxIndex - 1);
+});
+
 window.addEventListener('keydown', (event) => {
+  if (!lightbox.hidden) {
+    if (event.key === 'ArrowRight') showLightboxImage(lightboxIndex + 1);
+    if (event.key === 'ArrowLeft') showLightboxImage(lightboxIndex - 1);
+  }
   if (event.key !== 'Escape') return;
   if (!lightbox.hidden) {
     closeLightbox();
